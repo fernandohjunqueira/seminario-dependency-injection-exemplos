@@ -20,16 +20,18 @@ class Cliente():
     def __init__(self, nome, saldo_inicial):
         self.nome = nome
         self._saldo = saldo_inicial
-        self._pagamento = PagamentoComCartao(0.1)
 
     def recebe(self, valor_recebido):
         self._saldo += valor_recebido
 
     def paga(self, valor_transferido, destinatario):
-        pode_transferir = self._pagamento.transferencia_valida(self._saldo, valor_transferido)
+        pagamento = PagamentoComCartao(0.1)
+        pode_transferir = pagamento.transferencia_valida(self._saldo, valor_transferido)
         if (pode_transferir):
-            self._saldo = self._pagamento.calcula_saldo_final(self._saldo, valor_transferido)
+            self._saldo = pagamento.calcula_saldo_final(self._saldo, valor_transferido)
             destinatario.recebe(valor_transferido)
+
+
 
             print("-", self.nome, 
                   "transfere", 
